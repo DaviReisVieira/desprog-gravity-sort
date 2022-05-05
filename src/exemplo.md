@@ -110,7 +110,6 @@ void bead_sort(int *a, int len)
 
     beads = calloc(1, max_value * len);
 
-    // make the beads
     for (i = 0; i < len; i++)
         for (j = 0; j < a[i]; j++)
             BEAD(i, j) = 1;
