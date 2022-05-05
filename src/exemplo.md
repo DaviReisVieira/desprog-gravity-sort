@@ -1,18 +1,16 @@
-Bead sort
-======
+# Bead Sort
 
-Introdução
----------
+## Introdução
 
 Existem diversos tipos de algoritmos de comparação. Ente eles temos:
 
-* Selection sorts: Selection sort, Heapsort, Smoothsort...;
+- Selection sorts: Selection sort, Heapsort, Smoothsort...
 
-* Insertion sorts: Insertion sort Shell sort Splay sort...;
+- Insertion sorts: Insertion sort Shell sort Splay sort...
 
-* Distribution sorts: American flag sort, Bead sort, Bucket sort...;
+- Distribution sorts: American flag sort, Bead sort, Bucket sort...
 
-De modo geral, algoritmos de distribuição repartem os dados em diferentes espaços de memória (buckets), que são usados, posteriormente, para compor o output. 
+De modo geral, algoritmos de distribuição repartem os dados em diferentes espaços de memória (buckets), que são usados, posteriormente, para compor o output.
 
 Para iniciar a explicação do Bead Sort, precisamos pensar em um ábaco.
 
@@ -41,22 +39,35 @@ Pense na mudança dos eixos.
 !!!
 
 ::: Resposta
-Se transformarmos os eixos horizontais em verticais, por força da gravidade as peças irão cair, preenchendo os espaços vazios. Daí vem o nome pelo qual o algoritmo é mais conhecido: Gravity Sort.
+Se transformarmos os eixos horizontais em verticais, por força da gravidade as peças irão cair, preenchendo os espaços vazios. Daí vem o nome pelo qual o algoritmo é mais conhecido: **Gravity Sort**.
 :::
 
 ???
 
 !!! Mão na massa
-Aqui temos uma [ferramenta interativa](https://www.youtube.com/watch?v=oavMtUWDBTM) que vai facilitar o entendimento de como a ideia de mudar os eixos do ábaco funciona. Essa parte é fundamental para você concretizar o que viu até agora.
+Aqui temos uma [ferramenta interativa](https://davireisvieira.github.io/desprog-gravity-sort-site/) que vai facilitar o entendimento de como a ideia de mudar os eixos do ábaco funciona. Essa parte é fundamental para você concretizar o que viu até agora.
 
 !!!
 
 Com a analogia feita, podemos partir para a implementação do algoritmo.
 
-Implementação em vetor
----------
+## Implementação em matriz
 
-A segunda implementação que vamos mostrar é a utilizando um vetor. Nesta estratégia iremos pensar usando a ideia do ábaco. Ao trocarmos seu eixo e deixarmos as peças caírem, estamos ordenando visualmente. No entanto, como podemos transformar esse raciocínio em  código?
+Mas pera... Um ábaco é um objeto físico. O que pode ser análogo a ele em termos de programação?
+
+??? Checkpoint
+
+Pense em algo que possamos utilizar para `md substituir` o ábaco na hora de programar.
+
+::: Gabarito
+Imagine que cada bolinha do ábaco é um elemento e cada haste é um vetor. Exato! Um ábaco pode ser visto como uma matriz de `md TRUE` e `md FALSE`, ou `md 1s` e `md 0s`.
+:::
+
+???
+
+## Implementação em vetor
+
+A segunda implementação que vamos mostrar é a utilizando um vetor. Nesta estratégia iremos pensar usando a ideia do ábaco. Ao trocarmos seu eixo e deixarmos as peças caírem, estamos ordenando visualmente. No entanto, como podemos transformar esse raciocínio em código?
 
 Como estamos implementando em vetor, precisamos transformar as linhas do ábaco em um único vetor. Para isso iremos transformar cada linha em um vetor de 0 ou 1 em que a quantidade de 1 é o valor da linha e então somar as linhas.
 
@@ -72,8 +83,7 @@ Detalhando um pouco mais temos as seguintes etapas:
 
 Na terceira parte do desenho temos a visualização do vetor que encontramos no processo feito acima. Seria como se tivéssemos invertido os eixos e então estivéssemos contando a quantidade de peças nas colunas.
 
-
-``` txt
+```txt
 # Input do algoritmo -> [1, 4, 3]
 
 
@@ -98,7 +108,24 @@ para cada index do valor do input
 Com a implementação lógica feita, podemos partir para a implementação em código:
 
 ```c
-Codigo em C
+void bubble_sort(int *a, int n)
+{
+
+    int i, j, max_value;
+
+    for (i = 1, max_value = a[0]; i < n; i++)
+        if (a[i] > max_value)
+            max_value = a[i];
+
+    int *transposed_list = calloc(max_value, sizeof(int));
+
+    for (i = 0; i < n; i++)
+    {
+
+        for (j = 0; j < a[i]; j++)
+            transposed_list[j]++;
+    }
+}
 ```
 
 Porém, nossos valores ainda não estão ordenados. A última etapa consiste em removermos a linha mais baixa do ábaco e contar o número de peças para assim encontrarmos o maior valor referente a nossa ordenação.
@@ -107,7 +134,7 @@ Porém, nossos valores ainda não estão ordenados. A última etapa consiste em 
 
 Com o processo mais claro, podemos partir para a pseudo-implementação em código. Nessa parte, passamos por todos os itens do vetor e sempre que ele for maior que zero, subtraímos em 1 o seu valor, e adicionamos 1 a uma variável de suporte que resultará no valor ordenado da iteração.
 
-``` txt
+```txt
 # Input da segunda etapa -> [3, 2, 2, 1]
 
 
@@ -119,7 +146,41 @@ Com o processo mais claro, podemos partir para a pseudo-implementação em códi
 
 Com isso, temos nosso pseudo código implementado e podemos partir para a implementação efetiva em C.
 
-
 ```c
-Codigo em C
+void bubble_sort(int *a, int n)
+{
+
+    int i, j, max_value;
+
+    for (i = 1, max_value = a[0]; i < n; i++)
+        if (a[i] > max_value)
+            max_value = a[i];
+
+    int *transposed_list = calloc(max_value, sizeof(int));
+
+    for (i = 0; i < n; i++)
+    {
+
+        for (j = 0; j < a[i]; j++)
+            transposed_list[j]++;
+    }
+
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < max_value && transposed_list[j]; j++)
+            ;
+        a[i] = j;
+        for (j = 0; j < max_value && transposed_list[j]; j++)
+            transposed_list[j]--;
+    }
+
+    for (i = 0; i < n / 2; i++)
+    {
+        j = a[i];
+        a[i] = a[n - i - 1];
+        a[n - i - 1] = j;
+    }
+}
 ```
+
+## Complexidade de tempo
