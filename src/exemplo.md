@@ -55,7 +55,7 @@ Com a analogia feita, podemos partir para a implementação do algoritmo.
 
 Mas pera... Um ábaco é um objeto físico. O que pode ser análogo a ele em termos de programação?
 
-??? Checkpoint
+??? Checkpoint 1
 
 Pense em algo que possamos utilizar para `md substituir` o ábaco na hora de programar.
 
@@ -64,6 +64,163 @@ Imagine que cada bolinha do ábaco é um elemento e cada haste é um vetor. Exat
 :::
 
 ???
+Vamos pegar como exemplo a lista não ordenada `md [1, 4, 3]`. Agora, vamos adicionar estes números ao ábaco, assim como no site exemplo, só que ao invés das bolinhas, teremos 1, e nos espaços vazios, 0.
+
+```
+1: 1000
+4: 1111
+3: 1110
+```
+
+Para fazermos isso, pensemos na seguinte lógica:
+
+```txt
+# Econtrando o maior valor
+
+maior_valor = 0;
+para cada valor do input
+    se o valor for maior que o maior_valor
+        maior_valor = valor
+
+# Criando uma matriz de tamanho do quantidade de números x maior valor com valor 0
+
+para cada item até a quantidade de números da array.
+    para cada valor que vai de 0 até o maior_valor
+        matriz[item,valor] = 0
+
+# Trocando a quantidade de 0s referente a um número por 1 na matriz criada.
+
+para cada item até a quantidade de números da array.
+    para cada valor até o último número da array.
+        matriz(item, valor) = 1;
+```
+
+Implementando o código em C, temos:
+
+```c
+void bead_sort(int *a, int len)
+{
+    int i, j, max_value, sum_value;
+    unsigned char *beads;
+#define BEAD(i, j) beads[i * max_value + j]
+
+    for (i = 1, max_value = a[0]; i < len; i++)
+        if (a[i] > max_value)
+            max_value = a[i];
+
+    beads = calloc(1, max_value * len);
+
+    // make the beads
+    for (i = 0; i < len; i++)
+        for (j = 0; j < a[i]; j++)
+            BEAD(i, j) = 1;
+}
+```
+
+Bem, vamos recapitular visualmente o que já fizemos:
+
+:matriz
+
+1. Representamos os números em um ábaco.
+
+2. Fizemos analogia a uma matriz.
+
+3. Implementamos esta matriz semelhantemente ao ábaco.
+
+!!! Pit-Stop
+O que falta agora? Exatamente! Implementar a gravidade!
+!!!
+
+??? Checkpoint 2
+
+Pense em um artifício para `md simular` a gravidade em nosso código e escreva a lógica.
+
+::: Gabarito
+
+```txt
+para cada valor de 0 até o maior_valor
+    sum_value = 0;
+    para cada i de 0 até o total de numeros da array.
+        sum_value += matriz[i][valor];
+        matriz[i][valor] = 0;
+
+    for (i = len - sum_value; i < len; i++)
+    para cada i do total de numeros da array menos a soma até o total de numeros da array.
+        matriz[i][valor] = 1;
+```
+
+:::
+
+???
+
+Agora que possuímos a lógica acima, chegou a hora de implementá-la em C, mas antes, vejamos como ficou a matriz após a lógica:
+
+```
+1: 1000
+3: 1110
+4: 1111
+```
+
+Abaixo, podemos ver como temos nossa matriz:
+
+![](matriz_final.png)
+
+Lógica implementada em C.
+
+```c
+for (j = 0; j < max_value; j++)
+{
+    /* conta quantas bolinhas há em cada haste */
+    for (sum_value = i = 0; i < len; i++)
+    {
+        sum_value += BEAD(i, j);
+        BEAD(i, j) = 0;
+    }
+    /* coloca as bolinhas abaixo da soma */
+    for (i = len - sum_value; i < len; i++)
+        BEAD(i, j) = 1;
+}
+```
+
+Por último, temos o código completo implementado em C, já com a gravidade implementada e a alteração da lista recebida pela lista ordenada pelo **Gravity Sort**.
+
+```c
+void bead_sort(int *a, int len)
+{
+    int i, j, max_value, sum_value;
+    unsigned char *beads;
+#define BEAD(i, j) beads[i * max_value + j]
+
+    for (i = 1, max_value = a[0]; i < len; i++)
+        if (a[i] > max_value)
+            max_value = a[i];
+
+    beads = calloc(1, max_value * len);
+
+    for (i = 0; i < len; i++)
+        for (j = 0; j < a[i]; j++)
+            BEAD(i, j) = 1;
+
+    for (j = 0; j < max_value; j++)
+    {
+        for (sum_value = i = 0; i < len; i++)
+        {
+            sum_value += BEAD(i, j);
+            BEAD(i, j) = 0;
+        }
+        for (i = len - sum_value; i < len; i++)
+            BEAD(i, j) = 1;
+    }
+
+    for (i = 0; i < len; i++)
+    {
+        for (j = 0; j < max_value && BEAD(i, j); j++)
+            ;
+        a[i] = j;
+    }
+
+}
+```
 
 ## Implementação em vetor
 
@@ -108,7 +265,7 @@ para cada index do valor do input
 Com a implementação lógica feita, podemos partir para a implementação em código:
 
 ```c
-void bubble_sort(int *a, int n)
+void bead_sort(int *a, int n)
 {
 
     int i, j, max_value;
@@ -147,7 +304,7 @@ Com o processo mais claro, podemos partir para a pseudo-implementação em códi
 Com isso, temos nosso pseudo código implementado e podemos partir para a implementação efetiva em C.
 
 ```c
-void bubble_sort(int *a, int n)
+void bead_sort(int *a, int n)
 {
 
     int i, j, max_value;
