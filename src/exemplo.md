@@ -339,4 +339,100 @@ void bead_sort(int *a, int n)
 }
 ```
 
-## Complexidade de tempo
+## Complexidade de tempo da implementação matricial
+
+Na implementação matricial do algorítimo, recebemos um vetor e começamos o transformando em uma matriz de 0s e 1s.
+
+O vetor 
+
+[3, 2, 5, 4, 1, 6]
+
+
+se transformará na matriz
+
+[
+
+    [ 1 1 1 0 0 0 ] (3)
+
+    [ 1 1 0 0 0 0 ] (2)
+
+    [ 1 1 1 1 1 0 ] (5)
+
+    [ 1 1 1 1 0 0 ] (4)
+
+    [ 1 0 0 0 0 0 ] (1)
+
+    [ 1 1 1 1 1 1 ] (6)
+
+]
+
+A complexidade dessa operação é O(n * S), pois para cada item do vetor, criamos um novo vetor de tamanho S, onde S é o maior número do vetor original.
+
+Agora vamos iterar por todos os vetores da matriz, começando de baixo pra cima, e para todo valor '1' encontrado, se houver um valor '0' no mesmo índice porém no vetor abaixo, vamos trocar os valores dos dois vetores no índice comparado.
+
+Vamos repetir esse procedimento até não houver nenhuma troca de valores entre os vetores da matriz.
+
+No final das contas, essa operação simula uma queda dos valores '1' para baixo.
+
+A complexidade desse procedimento é O(S * n^2), pois iteramos por todo número de cada vetor na matriz[n * S], e precisamos fazer essa iteração até não ter mais modificações para serem feitas.
+
+## Complexidade de tempo da implementação vetorial
+
+A implementação vetorial do Bead Sort pode ser dividida em duas etapas.
+
+A primeira etapa é a criação do vetor auxiliar. 
+
+O pseudo-código para criação desse vetor é o seguinte:
+
+```
+vetor_auxiliar = [0] * max(vec)
+
+for num in vec:
+    for i in range(num):
+        vetor_auxiliar[i] += 1
+```
+
+Analisando esse pseudo código, podemos notar dois loops.
+
+O primeiro loop tem o número de iterações = n, enquanto o segundo tem número de iterações máximo = s = maior número dentro do vetor.
+
+Dessa forma, a complexidade temporal da primeira parte da implementação vetorial é O (n*S).
+
+A segunda parte da implementação consiste em e subtrair '1' de todo elemento do vetor auxiliar de forma iterada. a cada iteração, contamos o número de valores maiores que 0 presente no vetor auxiliar.
+
+A complexidade dessa etapa também é O(n*S)
+
+Assim, A complexidade da implementação vetorial é O(2*n*S) = O(n*S).
+
+Desafio
+-------
+
+??? Desafio Bead Sort 1
+
+Escreva o vetor auxiliar do bead sort a partir do vetor de entrada [6, 3, 5, 1, 7, 3, 8, 2]
+
+::: Gabarito
+
+Vetor Auxiliar: [  ]
+
+:::
+
+???
+
+??? Desafio Bead Sort 2
+
+A partir do vetor auxiliar obtido acima, escreva como fica o vetor auxiliar no final de cada iteração do bead sort
+
+::: Gabarito
+
+Iteração 1: [  ]
+Iteração 2: [  ]
+Iteração 3: [  ]
+Iteração 4: [  ]
+Iteração 5: [  ]
+Iteração 6: [  ]
+Iteração 7: [  ]
+
+:::
+
+???
