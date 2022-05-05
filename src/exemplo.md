@@ -413,7 +413,7 @@ Escreva o vetor auxiliar do bead sort a partir do vetor de entrada [6, 3, 5, 1, 
 
 ::: Gabarito
 
-Vetor Auxiliar: [  ]
+Vetor Auxiliar: [ 8, 7, 6, 4, 4, 3, 2, 1 ]
 
 :::
 
@@ -425,13 +425,14 @@ A partir do vetor auxiliar obtido acima, escreva como fica o vetor auxiliar no f
 
 ::: Gabarito
 
-Iteração 1: [  ]
-Iteração 2: [  ]
-Iteração 3: [  ]
-Iteração 4: [  ]
-Iteração 5: [  ]
-Iteração 6: [  ]
-Iteração 7: [  ]
+Iteração 1: [7, 6, 5, 3, 3, 2, 1, 0]
+Iteração 2: [6, 5, 4, 2, 2, 1, 0, -1]
+Iteração 3: [5, 4, 3, 1, 1, 0, -1, -2]
+Iteração 4: [4, 3, 2, 0, 0, -1, -2, -3]
+Iteração 5: [3, 2, 1, -1, -1, -2, -3, -4]
+Iteração 6: [2, 1, 0, -2, -2, -3, -4, -5]
+Iteração 7: [1, 0, -1, -3, -3, -4, -5, -6]
+Iteração 8: [0, -1, -2, -4, -4, -5, -6, -7]
 
 :::
 
