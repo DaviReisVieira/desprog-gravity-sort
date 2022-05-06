@@ -104,15 +104,19 @@ void bead_sort(int *a, int len)
     unsigned char *beads;
 #define BEAD(i, j) beads[i * max_value + j]
 
-    for (i = 1, max_value = a[0]; i < len; i++)
-        if (a[i] > max_value)
+    for (i = 1, max_value = a[0]; i < len; i++){
+        if (a[i] > max_value){
             max_value = a[i];
+        }
+    }
 
     beads = calloc(1, max_value * len);
 
-    for (i = 0; i < len; i++)
-        for (j = 0; j < a[i]; j++)
+    for (i = 0; i < len; i++){
+        for (j = 0; j < a[i]; j++){
             BEAD(i, j) = 1;
+        }
+    }
 }
 ```
 
@@ -266,20 +270,22 @@ Com a implementação lógica feita, podemos partir para a implementação em c�
 ```c
 void bead_sort(int *a, int n)
 {
+    # PARTE I
 
     int i, j, max_value;
 
-    for (i = 1, max_value = a[0]; i < n; i++)
-        if (a[i] > max_value)
+    for (i = 1, max_value = a[0]; i < n; i++){
+        if (a[i] > max_value){
             max_value = a[i];
+        }
+    }
 
     int *transposed_list = calloc(max_value, sizeof(int));
 
-    for (i = 0; i < n; i++)
-    {
-
-        for (j = 0; j < a[i]; j++)
+    for (i = 0; i < n; i++){
+        for (j = 0; j < a[i]; j++){
             transposed_list[j]++;
+        }  
     }
 }
 ```
@@ -294,7 +300,15 @@ Com o processo mais claro, podemos partir para a pseudo-implementação em códi
 # Input da segunda etapa -> [3, 2, 2, 1]
 
 
-# pseudo codigo [esperando codigo do Davi]
+para todo valor i menor que o tamanho do input
+    para todo valor j menor que o maior valor
+        input[i] = j
+        lista transposta[j] -= 1
+
+para todo valor i menor que metade do tamanho do input
+    j = input[i]
+    input[i] = input[n - i - 1]
+    input[n - i - 1] = j
 
 
 # Resultado -> [4, 3, 1]
@@ -305,33 +319,34 @@ Com isso, temos nosso pseudo código implementado e podemos partir para a implem
 ```c
 void bead_sort(int *a, int n)
 {
+    # PARTE I
 
     int i, j, max_value;
 
-    for (i = 1, max_value = a[0]; i < n; i++)
-        if (a[i] > max_value)
+    for (i = 1, max_value = a[0]; i < n; i++){
+        if (a[i] > max_value){
             max_value = a[i];
+        }
+    }
 
     int *transposed_list = calloc(max_value, sizeof(int));
 
-    for (i = 0; i < n; i++)
-    {
-
-        for (j = 0; j < a[i]; j++)
+    for (i = 0; i < n; i++){
+        for (j = 0; j < a[i]; j++){
             transposed_list[j]++;
+        }  
     }
 
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < max_value && transposed_list[j]; j++)
-            ;
-        a[i] = j;
-        for (j = 0; j < max_value && transposed_list[j]; j++)
+    # PARTE II
+
+    for (i = 0; i < n; i++){
+        for (j = 0; j < max_value && transposed_list[j]; j++){
+            a[i] = j;
             transposed_list[j]--;
+        };
     }
 
-    for (i = 0; i < n / 2; i++)
-    {
+    for (i = 0; i < n / 2; i++){
         j = a[i];
         a[i] = a[n - i - 1];
         a[n - i - 1] = j;
@@ -348,8 +363,9 @@ O vetor
 [3, 2, 5, 4, 1, 6]
 
 
-se transformará na matriz
+se transformará na matriz:
 
+```txt
 [
 
     [ 1 1 1 0 0 0 ] (3)
@@ -365,6 +381,7 @@ se transformará na matriz
     [ 1 1 1 1 1 1 ] (6)
 
 ]
+```
 
 A complexidade dessa operação é O(n * S), pois para cada item do vetor, criamos um novo vetor de tamanho S, onde S é o maior número do vetor original.
 
