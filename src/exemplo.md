@@ -283,11 +283,27 @@ A complexidade desse procedimento é O(S * n^2), pois iteramos por todo número 
 
 ## Implementação em vetor
 
-A segunda implementação que vamos mostrar é a utilizando um vetor. Nesta estratégia iremos pensar usando a ideia do ábaco. Ao trocarmos seu eixo e deixarmos as peças caírem, estamos ordenando visualmente. No entanto, como podemos transformar esse raciocínio em código?
+A segunda implementação que vamos mostrar é a utilizando um vetor. Ao trocarmos seu eixo e deixarmos as peças caírem, estamos ordenando visualmente.
 
-Como estamos implementando em vetor, precisamos transformar as linhas do ábaco em um único vetor. Para isso iremos transformar cada linha em um vetor de 0 ou 1 em que a quantidade de 1 é o valor da linha e então somar as linhas.
+??? Checkpoint
 
-![](vector_loop1.png)
+Como podemos transformar esse raciocínio em código?
+
+!!!
+
+Tente adpatar a explicação de matriz
+
+!!!
+
+::: Gabarito
+
+Vamos pegar todo o raciocínio da matriz, mas agora vamos somar as linhas da matriz, resultando em um único vetor.
+
+???
+
+Para isso iremos transformar cada linha em um vetor de 0 ou 1 em que a quantidade de 1 é o valor da linha e então somar as linhas.
+
+:vector
 
 Detalhando um pouco mais temos as seguintes etapas:
 
@@ -295,9 +311,8 @@ Detalhando um pouco mais temos as seguintes etapas:
 
 2. Preencher as posições da esquerda para a direita com 1 na quantidade de pedaços nas linhas;
 
-3. Somar os vetores em um único vetor;
+3. Somar as linhas em um único vetor;
 
-Na terceira parte do desenho temos a visualização do vetor que encontramos no processo feito acima. Seria como se tivéssemos invertido os eixos e então estivéssemos contando a quantidade de peças nas colunas.
 
 ```txt
 # Input do algoritmo -> [1, 4, 3]
@@ -321,36 +336,41 @@ para cada index do valor do input
 # Resultado -> [3, 2, 2, 1]
 ```
 
-Com a implementação lógica feita, podemos partir para a implementação em código:
+Com o nosso vetor em mãos, precisamos agora extrair os números deles em ordem. Porém, como podemos fazer isso?
 
-```c
-void bead_sort(int *a, int n)
-{
-    # PARTE I
+??? Construção de reciocínio
 
-    int i, j, max_value;
+Sabemos que todos os nossos números estão somados dentro desse único vetor, agora como podemos extrair um número por vez desse montante?
 
-    for (i = 1, max_value = a[0]; i < n; i++){
-        if (a[i] > max_value){
-            max_value = a[i];
-        }
-    }
+!!! Dica
 
-    int *transposed_list = calloc(max_value, sizeof(int));
+Pense novamente no ábaco após a gravidade ter feito efeito sobre nossas peças.
 
-    for (i = 0; i < n; i++){
-        for (j = 0; j < a[i]; j++){
-            transposed_list[j]++;
-        }  
-    }
-}
-```
+!!!
 
-Porém, nossos valores ainda não estão ordenados. A última etapa consiste em removermos a linha mais baixa do ábaco e contar o número de peças para assim encontrarmos o maior valor referente a nossa ordenação.
+::: Resposta
+
+Voltando para a alusão do ábaco, podemos retirar a última linha e contar o número de bolas. Abaixo temos uma melhor visualização desse processo.
 
 :vector_loop2
 
-Com o processo mais claro, podemos partir para a pseudo-implementação em código. Nessa parte, passamos por todos os itens do vetor e sempre que ele for maior que zero, subtraímos em 1 o seu valor, e adicionamos 1 a uma variável de suporte que resultará no valor ordenado da iteração.
+Com isso, precisamos transformar essa alusão para o caso do nosso vetor.
+
+???
+
+??? Construção de raciocínio
+
+O que significa remover a última linha em termos de código?
+
+::: Resposta
+
+Podemos remover um de todos os items do vetor e em todos os casos que o resultado seja maior que zero, temos um valor válido. Portanto, precisamos apenas somar a quantidade de valores validos encontrados. Abaixo temos uma ilustração desse processo.
+
+:vector2code
+
+???
+
+Aqui temos um pseudo código gerado com o raciocínio construído acima.
 
 ```txt
 # Input da segunda etapa -> [3, 2, 2, 1]
@@ -368,46 +388,6 @@ para todo valor i menor que metade do tamanho do input
 
 
 # Resultado -> [4, 3, 1]
-```
-
-Com isso, temos nosso pseudo código implementado e podemos partir para a implementação efetiva em C.
-
-```c
-void bead_sort(int *a, int n)
-{
-    # PARTE I
-
-    int i, j, max_value;
-
-    for (i = 1, max_value = a[0]; i < n; i++){
-        if (a[i] > max_value){
-            max_value = a[i];
-        }
-    }
-
-    int *transposed_list = calloc(max_value, sizeof(int));
-
-    for (i = 0; i < n; i++){
-        for (j = 0; j < a[i]; j++){
-            transposed_list[j]++;
-        }  
-    }
-
-    # PARTE II
-
-    for (i = 0; i < n; i++){
-        for (j = 0; j < max_value && transposed_list[j]; j++){
-            a[i] = j;
-            transposed_list[j]--;
-        };
-    }
-
-    for (i = 0; i < n / 2; i++){
-        j = a[i];
-        a[i] = a[n - i - 1];
-        a[n - i - 1] = j;
-    }
-}
 ```
 
 ## Complexidade de tempo da implementação vetorial
