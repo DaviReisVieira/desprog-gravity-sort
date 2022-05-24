@@ -14,11 +14,7 @@ De modo geral, algoritmos de distribuição repartem os dados em diferentes espa
 
 Para iniciar a explicação do Bead Sort, precisamos pensar em um ábaco.
 
-![](abaco.png)
-
-De modo geral, ele possui todas as fileiras com a mesma quantidade de unidades e o usuário passa os pedaços de um lado para o outro fazendo algum tipo de contagem. No nosso caso, vamos pensar que as linhas são compostas apenas pela parte relevante, desconsiderando as unidades que sobram e não fazem parte do raciocínio. Considerando que as peças do lado esquerdo são as relevantes, podemos visualizar nosso ábaco da seguinte maneira.
-
-![](meio_abaco.png)
+![](abaco.svg)
 
 ??? Checkpoint 1
 
@@ -54,6 +50,8 @@ Com a analogia feita, podemos partir para a implementação do algoritmo.
 ## Implementação em matriz
 
 Mas pera... Um ábaco é um objeto físico. O que pode ser análogo a ele em termos de programação?
+
+:abaco_matriz
 
 ??? Checkpoint 1
 
@@ -225,6 +223,64 @@ void bead_sort(int *a, int len)
 }
 ```
 
+## Complexidade de tempo da implementação matricial
+
+Na implementação matricial do algorítimo, recebemos um vetor e começamos o transformando em uma matriz de 0s e 1s.
+
+O vetor 
+
+```txt
+[3, 2, 5, 4, 1, 6]
+```
+
+se transformará na matriz:
+
+```txt
+[
+
+    [ 1 1 1 0 0 0 ] (3)
+
+    [ 1 1 0 0 0 0 ] (2)
+
+    [ 1 1 1 1 1 0 ] (5)
+
+    [ 1 1 1 1 0 0 ] (4)
+
+    [ 1 0 0 0 0 0 ] (1)
+
+    [ 1 1 1 1 1 1 ] (6)
+
+]
+```
+
+Para cada item do vetor, criamos um novo vetor de tamanho S, onde S é o maior número do vetor original.
+
+??? Checkpoint 3
+
+Qual é a complexidade de tempo dessa operação?
+
+::: Resposta
+A complexidade dessa operação é O(n * S)
+:::
+
+???
+
+Agora vamos iterar por todos os vetores da matriz, começando de baixo pra cima, e para todo valor '1' encontrado, se houver um valor '0' no mesmo índice porém no vetor abaixo, vamos trocar os valores dos dois vetores no índice comparado.
+
+Vamos repetir esse procedimento até não houver nenhuma troca de valores entre os vetores da matriz.
+
+No final das contas, essa operação simula uma queda dos valores '1' para baixo.
+
+??? Checkpoint 3
+
+Qual é a complexidade de tempo dessa operação?
+
+::: Resposta
+A complexidade desse procedimento é O(S * n^2), pois iteramos por todo número de cada vetor na matriz[n * S], e precisamos fazer essa iteração até não ter mais modificações para serem feitas.
+:::
+
+???
+
 ## Implementação em vetor
 
 A segunda implementação que vamos mostrar é a utilizando um vetor. Nesta estratégia iremos pensar usando a ideia do ábaco. Ao trocarmos seu eixo e deixarmos as peças caírem, estamos ordenando visualmente. No entanto, como podemos transformar esse raciocínio em código?
@@ -354,45 +410,6 @@ void bead_sort(int *a, int n)
 }
 ```
 
-## Complexidade de tempo da implementação matricial
-
-Na implementação matricial do algorítimo, recebemos um vetor e começamos o transformando em uma matriz de 0s e 1s.
-
-O vetor 
-
-[3, 2, 5, 4, 1, 6]
-
-
-se transformará na matriz:
-
-```txt
-[
-
-    [ 1 1 1 0 0 0 ] (3)
-
-    [ 1 1 0 0 0 0 ] (2)
-
-    [ 1 1 1 1 1 0 ] (5)
-
-    [ 1 1 1 1 0 0 ] (4)
-
-    [ 1 0 0 0 0 0 ] (1)
-
-    [ 1 1 1 1 1 1 ] (6)
-
-]
-```
-
-A complexidade dessa operação é O(n * S), pois para cada item do vetor, criamos um novo vetor de tamanho S, onde S é o maior número do vetor original.
-
-Agora vamos iterar por todos os vetores da matriz, começando de baixo pra cima, e para todo valor '1' encontrado, se houver um valor '0' no mesmo índice porém no vetor abaixo, vamos trocar os valores dos dois vetores no índice comparado.
-
-Vamos repetir esse procedimento até não houver nenhuma troca de valores entre os vetores da matriz.
-
-No final das contas, essa operação simula uma queda dos valores '1' para baixo.
-
-A complexidade desse procedimento é O(S * n^2), pois iteramos por todo número de cada vetor na matriz[n * S], e precisamos fazer essa iteração até não ter mais modificações para serem feitas.
-
 ## Complexidade de tempo da implementação vetorial
 
 A implementação vetorial do Bead Sort pode ser dividida em duas etapas.
@@ -411,13 +428,29 @@ for num in vec:
 
 Analisando esse pseudo código, podemos notar dois loops.
 
-O primeiro loop tem o número de iterações = n, enquanto o segundo tem número de iterações máximo = s = maior número dentro do vetor.
+O primeiro loop tem o número de iterações = n, enquanto o segundo tem número de iterações máximo = S = maior número dentro do vetor.
 
-Dessa forma, a complexidade temporal da primeira parte da implementação vetorial é O (n*S).
+??? Checkpoint 4
+
+Qual é a complexidade de tempo dessa operação?
+
+::: Resposta
+O (n*S)
+:::
+
+???
 
 A segunda parte da implementação consiste em e subtrair '1' de todo elemento do vetor auxiliar de forma iterada. a cada iteração, contamos o número de valores maiores que 0 presente no vetor auxiliar.
 
+??? Checkpoint 5
+
+Qual é a complexidade de tempo dessa operação?
+
+::: Resposta
 A complexidade dessa etapa também é O(n*S)
+:::
+
+???
 
 Assim, A complexidade da implementação vetorial é O(2*n*S) = O(n*S).
 
