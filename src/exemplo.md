@@ -225,7 +225,7 @@ void bead_sort(int *a, int len)
 
 ## Complexidade de tempo da implementação matricial
 
-Na implementação matricial do algorítimo, recebemos um vetor e começamos o transformando em uma matriz de 0s e 1s.
+Na implementação matricial do algoritmo, recebemos um vetor e começamos o transformando em uma matriz de 0s e 1s.
 
 O vetor 
 
@@ -255,7 +255,7 @@ se transformará na matriz:
 
 Para cada item do vetor, criamos um novo vetor de tamanho S, onde S é o maior número do vetor original.
 
-??? Checkpoint 3
+??? Checkpoint 1
 
 Qual é a complexidade de tempo dessa operação?
 
@@ -271,7 +271,7 @@ Vamos repetir esse procedimento até não houver nenhuma troca de valores entre 
 
 No final das contas, essa operação simula uma queda dos valores '1' para baixo.
 
-??? Checkpoint 3
+??? Checkpoint 2
 
 Qual é a complexidade de tempo dessa operação?
 
@@ -281,11 +281,26 @@ A complexidade desse procedimento é O(S * n^2), pois iteramos por todo número 
 
 ???
 
+## Complexidade de memória da implementação matricial
+Na implementação matricial , precisamos instanciar uma matriz para representar o ábaco.
+
+??? Checkpoint 1
+
+Quais serão as dimensões dessa matriz?
+
+::: Resposta
+As dimensões dessa matriz será n x S, sendo S o maior número do nosso vetor de entrada, e n a quantidade de números.
+:::
+
+???
+
+O espaço alocado para essa matriz é justamente a complexidade de memória para o nosso algoritmo, O(n*S).
+
 ## Implementação em vetor
 
 A segunda implementação que vamos mostrar é a utilizando um vetor. Ao trocarmos seu eixo e deixarmos as peças caírem, estamos ordenando visualmente.
 
-??? Checkpoint
+??? Checkpoint 1
 
 Como podemos transformar esse raciocínio em código?
 
@@ -410,7 +425,7 @@ Analisando esse pseudo código, podemos notar dois loops.
 
 O primeiro loop tem o número de iterações = n, enquanto o segundo tem número de iterações máximo = S = maior número dentro do vetor.
 
-??? Checkpoint 4
+??? Checkpoint 1
 
 Qual é a complexidade de tempo dessa operação?
 
@@ -422,7 +437,7 @@ O (n*S)
 
 A segunda parte da implementação consiste em e subtrair '1' de todo elemento do vetor auxiliar de forma iterada. a cada iteração, contamos o número de valores maiores que 0 presente no vetor auxiliar.
 
-??? Checkpoint 5
+??? Checkpoint 2
 
 Qual é a complexidade de tempo dessa operação?
 
@@ -433,6 +448,23 @@ A complexidade dessa etapa também é O(n*S)
 ???
 
 Assim, A complexidade da implementação vetorial é O(2*n*S) = O(n*S).
+
+## Complexidade de memória da implementação vetorial
+
+Na implementação vetorial,o único espaço de memória que precisamos alocar é o espaço para armazenar o vetor.
+
+??? Checkpoint 1
+
+Qual é o tamanho que esse vetor precisa ter?
+
+::: Resposta
+O vetor precisa ter o tamanho igual ao maior valor do vetor de entrada.
+:::
+
+???
+
+Como o único espaço de memória a ser alocado ao algoritmo é o espaço desse vetor, a complexidade será O(S).
+
 
 Desafio
 -------
