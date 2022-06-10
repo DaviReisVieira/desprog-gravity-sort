@@ -18,32 +18,15 @@ Para iniciar a explicação do Bead Sort, precisamos pensar em um ábaco.
 
 ??? Checkpoint 1
 
-Quais valores podemos contar no ábaco?
+O que acontece se simularmos a gravidade atuando no sistema que montamos?
 
 ::: Resposta
-Apenas números positivos e inteiros. As restrições do ábaco também são aplicáveis ao Bead sort.
+Por força da gravidade as peças irão cair, preenchendo os espaços vazios. Daí vem o nome pelo qual o algoritmo é mais conhecido: **Gravity Sort**.
 :::
 
-???
-
-??? Checkpoint 2
-
-Com as nossas condições montadas, como podemos organizar nossas linhas em ordem crescente?
-
-!!! Dica
-Pense na mudança dos eixos.
-!!!
-
-::: Resposta
-Se transformarmos os eixos horizontais em verticais, por força da gravidade as peças irão cair, preenchendo os espaços vazios. Daí vem o nome pelo qual o algoritmo é mais conhecido: **Gravity Sort**.
-:::
+![](jukaneles.svg)
 
 ???
-
-!!! Mão na massa
-Aqui temos uma [ferramenta interativa](https://davireisvieira.github.io/desprog-gravity-sort-site/) que vai facilitar o entendimento de como a ideia de mudar os eixos do ábaco funciona. Essa parte é fundamental para você concretizar o que viu até agora.
-
-!!!
 
 Com a analogia feita, podemos partir para a implementação do algoritmo.
 
@@ -161,7 +144,7 @@ Bem, vamos recapitular visualmente o que já fizemos:
 O que falta agora? Exatamente! Implementar a gravidade!
 !!!
 
-??? Checkpoint 2
+??? Checkpoint 1
 
 Pense em um artifício para `md simular` a gravidade em nosso código e escreva a lógica.
 
@@ -490,6 +473,26 @@ O vetor precisa ter o tamanho igual ao maior valor do vetor de entrada.
 ???
 
 Como o único espaço de memória a ser alocado ao algoritmo é o espaço desse vetor, a complexidade será O(S).
+
+## Mão na Massa
+!!! Mão na massa
+Aqui temos uma [ferramenta interativa](https://davireisvieira.github.io/desprog-gravity-sort-site/) que vai facilitar o entendimento de como a ideia de mudar os eixos do ábaco funciona. Essa parte é fundamental para você concretizar o que viu até agora.
+
+!!!
+
+## Limitações
+
+??? Checkpoint 1
+
+Quais valores podemos contar no ábaco?
+
+::: Resposta
+Apenas números positivos e inteiros. As restrições do ábaco também são aplicáveis ao Bead sort.
+:::
+
+???
+
+É importante mencionar que o algoritmo é altamente teórico e tem pouco uso em implementações práticas.
 
 ## Desafio
 
