@@ -53,16 +53,22 @@ Mas pera... Um ábaco é um objeto físico. O que pode ser análogo a ele em ter
 
 :abaco_matriz
 
-??? Checkpoint 1
+??? Atividade
 
 Pense em algo que possamos utilizar para `md substituir` o ábaco na hora de programar.
 
 ::: Gabarito
 Imagine que cada bolinha do ábaco é um elemento e cada haste é um vetor. Exato! Um ábaco pode ser visto como uma matriz de `md TRUE` e `md FALSE`, ou `md 1s` e `md 0s`.
+
+![](abaco_matriz.svg)
+
 :::
 
 ???
-Vamos pegar como exemplo a lista não ordenada `md [1, 4, 3]`. Agora, vamos adicionar estes números ao ábaco, assim como no site exemplo, só que ao invés das bolinhas, teremos 1, e nos espaços vazios, 0.
+
+??? Atividade
+Vamos pegar como exemplo a lista não ordenada `md [1, 4, 3]`. Como ficaria a apresentação desta lista na matriz?
+::: Gabarito
 
 ```
 1: 1000
@@ -70,7 +76,19 @@ Vamos pegar como exemplo a lista não ordenada `md [1, 4, 3]`. Agora, vamos adic
 3: 1110
 ```
 
-Para fazermos isso, pensemos na seguinte lógica:
+:::
+???
+
+??? Atividade
+
+E para fazermos isso, qual lógica será utilizada? Escreva um pseudo-código que vai representar a lógica que será utilizada para criar esta matriz.
+
+!!! Dica
+Pense em uma matriz de matrizes.
+!!!
+
+::: Gabarito
+O gabarito abaixo é uma possibilidade para implementar o algoritmo. Discuta com o professor se sua solução é viável.
 
 ```txt
 # Econtrando o maior valor
@@ -93,29 +111,40 @@ para cada item até a quantidade de números da array.
         matriz(item, valor) = 1;
 ```
 
-Implementando o código em C, temos:
+:::
 
-```c
-void bead_sort(int *a, int len)
-{
-    int i, j, max_value, sum_value;
-    unsigned char *beads;
-#define BEAD(i, j) beads[i * max_value + j]
+???
 
-    for (i = 1, max_value = a[0]; i < len; i++){
-        if (a[i] > max_value){
-            max_value = a[i];
-        }
-    }
+??? Atividade
+Agora que você já conseguiu implementar a matriz, pense em como ela ficaria no mesmo modelo da atividade anterior e depois, com a gravidade aplicada.
 
-    beads = calloc(1, max_value * len);
+::: Gabarito
+Abaixo, podemos conferir a matriz original, sem qualquer alteração.
 
-    for (i = 0; i < len; i++){
-        for (j = 0; j < a[i]; j++){
-            BEAD(i, j) = 1;
-        }
-    }
-}
+![](abaco143.svg)
+
+Abaixo, teremos a matriz com a gravidade aplicada.
+
+![](abaco134.svg)
+
+:::
+???
+
+Implementando o código em Python, temos:
+
+```python
+def bead_sort(obj):
+    if all([type(x) == int and x >= 0 for x in obj]):
+        ref = [range(x) for x in obj]
+    else:
+        raise ValueError("Todos os elementos devem ser inteiros não negativos.")
+    inter = []
+    ind = 0
+    prev = sum([1 for x in ref if len(x) > ind])
+    while prev:
+        inter.append(range(prev))
+        ind += 1
+        prev = sum([1 for x in ref if len(x) > ind])
 ```
 
 Bem, vamos recapitular visualmente o que já fizemos:
@@ -154,7 +183,7 @@ para cada valor de 0 até o maior_valor
 
 ???
 
-Agora que possuímos a lógica acima, chegou a hora de implementá-la em C, mas antes, vejamos como ficou a matriz após a lógica:
+Agora que possuímos a lógica acima, chegou a hora de implementá-la em Python, mas antes, vejamos como ficou a matriz após a lógica:
 
 ```
 1: 1000
@@ -166,68 +195,50 @@ Abaixo, podemos ver como temos nossa matriz:
 
 ![](matriz_final.png)
 
-Lógica implementada em C.
+Lógica implementada em Python.
 
-```c
-for (j = 0; j < max_value; j++)
-{
-    /* conta quantas bolinhas há em cada haste */
-    for (sum_value = i = 0; i < len; i++)
-    {
-        sum_value += BEAD(i, j);
-        BEAD(i, j) = 0;
-    }
-    /* coloca as bolinhas abaixo da soma */
-    for (i = len - sum_value; i < len; i++)
-        BEAD(i, j) = 1;
-}
+```python
+ind = 0
+    prev = sum([1 for x in inter if len(x) > ind])
+    out = []
+    while prev:
+        out.append(prev)
+        ind += 1
+        prev = sum([1 for x in inter if len(x) > ind])
+    out = out[::-1]
 ```
 
-Por último, temos o código completo implementado em C, já com a gravidade implementada e a alteração da lista recebida pela lista ordenada pelo **Gravity Sort**.
+Por último, temos o código completo implementado em Python, já com a gravidade implementada e a alteração da lista recebida pela lista ordenada pelo **Gravity Sort**.
 
-```c
-void bead_sort(int *a, int len)
-{
-    int i, j, max_value, sum_value;
-    unsigned char *beads;
-#define BEAD(i, j) beads[i * max_value + j]
-
-    for (i = 1, max_value = a[0]; i < len; i++)
-        if (a[i] > max_value)
-            max_value = a[i];
-
-    beads = calloc(1, max_value * len);
-
-    for (i = 0; i < len; i++)
-        for (j = 0; j < a[i]; j++)
-            BEAD(i, j) = 1;
-
-    for (j = 0; j < max_value; j++)
-    {
-        for (sum_value = i = 0; i < len; i++)
-        {
-            sum_value += BEAD(i, j);
-            BEAD(i, j) = 0;
-        }
-        for (i = len - sum_value; i < len; i++)
-            BEAD(i, j) = 1;
-    }
-
-    for (i = 0; i < len; i++)
-    {
-        for (j = 0; j < max_value && BEAD(i, j); j++)
-            ;
-        a[i] = j;
-    }
-
-}
+```python
+def bead_sort(obj):
+    if all([type(x) == int and x >= 0 for x in obj]):
+        ref = [range(x) for x in obj]
+    else:
+        raise ValueError("Todos os elementos devem ser inteiros não negativos.")
+    inter = []
+    ind = 0
+    prev = sum([1 for x in ref if len(x) > ind])
+    while prev:
+        inter.append(range(prev))
+        ind += 1
+        prev = sum([1 for x in ref if len(x) > ind])
+    ind = 0
+    prev = sum([1 for x in inter if len(x) > ind])
+    out = []
+    while prev:
+        out.append(prev)
+        ind += 1
+        prev = sum([1 for x in inter if len(x) > ind])
+    out = out[::-1]
+    return out
 ```
 
 ## Complexidade de tempo da implementação matricial
 
 Na implementação matricial do algoritmo, recebemos um vetor e começamos o transformando em uma matriz de 0s e 1s.
 
-O vetor 
+O vetor
 
 ```txt
 [3, 2, 5, 4, 1, 6]
@@ -260,7 +271,7 @@ Para cada item do vetor, criamos um novo vetor de tamanho S, onde S é o maior n
 Qual é a complexidade de tempo dessa operação?
 
 ::: Resposta
-A complexidade dessa operação é O(n * S)
+A complexidade dessa operação é O(n \* S)
 :::
 
 ???
@@ -276,12 +287,13 @@ No final das contas, essa operação simula uma queda dos valores '1' para baixo
 Qual é a complexidade de tempo dessa operação?
 
 ::: Resposta
-A complexidade desse procedimento é O(S * n^2), pois iteramos por todo número de cada vetor na matriz[n * S], e precisamos fazer essa iteração até não ter mais modificações para serem feitas.
+A complexidade desse procedimento é O(S _ n^2), pois iteramos por todo número de cada vetor na matriz[n _ S], e precisamos fazer essa iteração até não ter mais modificações para serem feitas.
 :::
 
 ???
 
 ## Complexidade de memória da implementação matricial
+
 Na implementação matricial , precisamos instanciar uma matriz para representar o ábaco.
 
 ??? Checkpoint 1
@@ -294,7 +306,7 @@ As dimensões dessa matriz será n x S, sendo S o maior número do nosso vetor d
 
 ???
 
-O espaço alocado para essa matriz é justamente a complexidade de memória para o nosso algoritmo, O(n*S).
+O espaço alocado para essa matriz é justamente a complexidade de memória para o nosso algoritmo, O(n\*S).
 
 ## Implementação em vetor
 
@@ -328,7 +340,6 @@ Detalhando um pouco mais temos as seguintes etapas:
 
 3. Somar as linhas em um único vetor;
 
-
 ```txt
 # Input do algoritmo -> [1, 4, 3]
 
@@ -353,7 +364,7 @@ para cada index do valor do input
 
 Com o nosso vetor em mãos, precisamos agora extrair os números deles em ordem. Porém, como podemos fazer isso?
 
-??? Construção de reciocínio
+??? Construção de raciocínio
 
 Sabemos que todos os nossos números estão somados dentro desse único vetor, agora como podemos extrair um número por vez desse montante?
 
@@ -409,7 +420,7 @@ para todo valor i menor que metade do tamanho do input
 
 A implementação vetorial do Bead Sort pode ser dividida em duas etapas.
 
-A primeira etapa é a criação do vetor auxiliar. 
+A primeira etapa é a criação do vetor auxiliar.
 
 O pseudo-código para criação desse vetor é o seguinte:
 
@@ -430,7 +441,7 @@ O primeiro loop tem o número de iterações = n, enquanto o segundo tem número
 Qual é a complexidade de tempo dessa operação?
 
 ::: Resposta
-O (n*S)
+O (n\*S)
 :::
 
 ???
@@ -442,12 +453,12 @@ A segunda parte da implementação consiste em e subtrair '1' de todo elemento d
 Qual é a complexidade de tempo dessa operação?
 
 ::: Resposta
-A complexidade dessa etapa também é O(n*S)
+A complexidade dessa etapa também é O(n\*S)
 :::
 
 ???
 
-Assim, A complexidade da implementação vetorial é O(2*n*S) = O(n*S).
+Assim, A complexidade da implementação vetorial é O(2*n*S) = O(n\*S).
 
 ## Complexidade de memória da implementação vetorial
 
@@ -465,9 +476,7 @@ O vetor precisa ter o tamanho igual ao maior valor do vetor de entrada.
 
 Como o único espaço de memória a ser alocado ao algoritmo é o espaço desse vetor, a complexidade será O(S).
 
-
-Desafio
--------
+## Desafio
 
 ??? Desafio Bead Sort 1
 
