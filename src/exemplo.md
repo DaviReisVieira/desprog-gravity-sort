@@ -98,16 +98,6 @@ para cada item até a quantidade de números da array.
 ???
 
 ??? Atividade
-Agora que você já conseguiu implementar a matriz, pense em como ela ficaria no mesmo modelo da atividade anterior.
-
-::: Gabarito
-Abaixo, podemos conferir a matriz com a lista [1, 4, 3].
-![](abaco143.svg)
-
-:::
-???
-
-??? Atividade
 Antes de prosseguir, vamos verificar o padrão do tamanho da matriz. Qual seria o tamanho da matriz?
 
 !!! Aviso
@@ -139,7 +129,7 @@ Agora que você já conseguiu implementar a matriz, pense em como ela ficaria no
 ::: Gabarito
 Abaixo, teremos a matriz com a gravidade aplicada.
 
-![](abaco134.svg)
+![](abaco134.jpeg)
 
 :::
 ???
@@ -298,6 +288,8 @@ Isso mesmo, somando as linhas da matriz. Se pensarmos bem, temos varios vetores 
 
 :vetor_check1
 
+Aqui vale ressaltar que os números a esquerda são as quantidades de bolas e os números vermelhos o tamanho. Então se à esquerda temos 2, teremos até a coluna 2 preenchida com uns e o restante com zeros.
+
 ???
 
 Detalhando um pouco mais o processo anterior e resgatando a criação da matriz temos as seguintes etapas:
@@ -372,7 +364,7 @@ Pense no processo de subtração, porém faça algumas restrições para não en
 
 A ideia aqui é subtrairmos um de todas as casas em que temos valores maiores que zero. Sempre que essa condição for contemplada, vamos somar as casas onde ocorreu subtração e assim encontrar o valor a ser ordenado. Abaixo temos uma melhor visualização desse processo:
 
-:vetorsub1
+:vetorsub
 
 ???
 
