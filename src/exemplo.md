@@ -21,10 +21,9 @@ Para iniciar a explicação do Bead Sort, precisamos pensar em um ábaco.
 O que acontece se simularmos a gravidade atuando no sistema que montamos?
 
 ::: Resposta
-Por força da gravidade as peças irão cair, preenchendo os espaços vazios. Daí vem o nome pelo qual o algoritmo é mais conhecido: **Gravity Sort**.
-:::
-
+Por força da gravidade, as peças irão cair, preenchendo os espaços vazios. Daí vem o nome pelo qual o algoritmo é mais conhecido: **Gravity Sort**.
 ![](jukaneles.svg)
+:::
 
 ???
 
@@ -99,36 +98,26 @@ para cada item até a quantidade de números da array.
 ???
 
 ??? Atividade
-Agora que você já conseguiu implementar a matriz, pense em como ela ficaria no mesmo modelo da atividade anterior e depois, com a gravidade aplicada.
+Agora que você já conseguiu implementar a matriz, pense em como ela ficaria no mesmo modelo da atividade anterior.
 
 ::: Gabarito
-Abaixo, podemos conferir a matriz original, sem qualquer alteração.
-
+Abaixo, podemos conferir a matriz com a lista [1, 4, 3].
 ![](abaco143.svg)
-
-Abaixo, teremos a matriz com a gravidade aplicada.
-
-![](abaco134.svg)
 
 :::
 ???
 
-Implementando o código em Python, temos:
+??? Atividade
+Antes de prosseguir, vamos verificar o padrão do tamanho da matriz. Qual seria o tamanho da matriz?
 
-```python
-def bead_sort(obj):
-    if all([type(x) == int and x >= 0 for x in obj]):
-        ref = [range(x) for x in obj]
-    else:
-        raise ValueError("Todos os elementos devem ser inteiros não negativos.")
-    inter = []
-    ind = 0
-    prev = sum([1 for x in ref if len(x) > ind])
-    while prev:
-        inter.append(range(prev))
-        ind += 1
-        prev = sum([1 for x in ref if len(x) > ind])
-```
+!!! Aviso
+Apesar de parecer óbvio, é importante que você entenda isso.
+!!!
+
+::: Gabarito
+Temos que o número de colunas é o maior valor da lista, e o número de linhas é o tamanho da lista.
+:::
+???
 
 Bem, vamos recapitular visualmente o que já fizemos:
 
@@ -144,9 +133,20 @@ Bem, vamos recapitular visualmente o que já fizemos:
 O que falta agora? Exatamente! Implementar a gravidade!
 !!!
 
+??? Atividade
+Agora que você já conseguiu implementar a matriz, pense em como ela ficaria no mesmo modelo da atividade anterior com a gravidade aplicada.
+
+::: Gabarito
+Abaixo, teremos a matriz com a gravidade aplicada.
+
+![](abaco134.svg)
+
+:::
+???
+
 ??? Checkpoint 1
 
-Pense em um artifício para `md simular` a gravidade em nosso código e escreva a lógica.
+Pense em um artifício para `md simular` a gravidade em nosso código e escreva a lógica em forma de pseudo-código.
 
 ::: Gabarito
 
@@ -166,32 +166,13 @@ para cada valor de 0 até o maior_valor
 
 ???
 
-Agora que possuímos a lógica acima, chegou a hora de implementá-la em Python, mas antes, vejamos como ficou a matriz após a lógica:
-
-```
-1: 1000
-3: 1110
-4: 1111
-```
-
 Abaixo, podemos ver como temos nossa matriz:
 
 ![](matriz_final.png)
 
-Lógica implementada em Python.
+Caso queira ver o código completo implementado em Python, já com a gravidade implementada e a alteração da lista recebida pela lista ordenada pelo **Gravity Sort**, clique no botão abaixo.
 
-```python
-ind = 0
-    prev = sum([1 for x in inter if len(x) > ind])
-    out = []
-    while prev:
-        out.append(prev)
-        ind += 1
-        prev = sum([1 for x in inter if len(x) > ind])
-    out = out[::-1]
-```
-
-Por último, temos o código completo implementado em Python, já com a gravidade implementada e a alteração da lista recebida pela lista ordenada pelo **Gravity Sort**.
+::: Código em Python
 
 ```python
 def bead_sort(obj):
@@ -216,6 +197,12 @@ def bead_sort(obj):
     out = out[::-1]
     return out
 ```
+
+:::
+
+!!! ATENÇÃO
+Você não precisa entender o código acima para prosseguir com a atividade.
+!!!
 
 ## Complexidade de tempo da implementação matricial
 
@@ -254,7 +241,7 @@ Para cada item do vetor, criamos um novo vetor de tamanho S, onde S é o maior n
 Qual é a complexidade de tempo dessa operação?
 
 ::: Resposta
-A complexidade dessa operação é O(n \* S)
+A complexidade dessa operação é O($n . S$)
 :::
 
 ???
@@ -270,7 +257,7 @@ No final das contas, essa operação simula uma queda dos valores '1' para baixo
 Qual é a complexidade de tempo dessa operação?
 
 ::: Resposta
-A complexidade desse procedimento é O(S _ n^2), pois iteramos por todo número de cada vetor na matriz[n _ S], e precisamos fazer essa iteração até não ter mais modificações para serem feitas.
+A complexidade desse procedimento é O($S . n^2$), pois iteramos por todo número de cada vetor na matriz[$n . S$], e precisamos fazer essa iteração até não ter mais modificações para serem feitas.
 :::
 
 ???
@@ -284,16 +271,16 @@ Na implementação matricial , precisamos instanciar uma matriz para representar
 Quais serão as dimensões dessa matriz?
 
 ::: Resposta
-As dimensões dessa matriz será n x S, sendo S o maior número do nosso vetor de entrada, e n a quantidade de números.
+As dimensões dessa matriz será $n.S$, sendo S o maior número do nosso vetor de entrada, e n a quantidade de números.
 :::
 
 ???
 
-O espaço alocado para essa matriz é justamente a complexidade de memória para o nosso algoritmo, O(n\*S).
+O espaço alocado para essa matriz é justamente a complexidade de memória para o nosso algoritmo, O($n.S$).
 
 ## Implementação em vetor
 
-A segunda implementação que vamos mostrar é a utilizando um vetores.  Resgatando a explicação anterior de matrizes, vamos usá-la como ponto de partida. Precisamos encontrar alguma forma de transformar aquela matriz de uns e zeros em um único vetor.
+A segunda implementação que vamos mostrar é a utilizando um vetores. Resgatando a explicação anterior de matrizes, vamos usá-la como ponto de partida. Precisamos encontrar alguma forma de transformar aquela matriz de uns e zeros em um único vetor.
 
 ??? Checkpoint 1
 
@@ -324,7 +311,6 @@ Detalhando um pouco mais o processo anterior e resgatando a criação da matriz 
 Aqui temos a visualização do processo completo.
 
 :vetor
-
 
 Aqui temos o pseudo código do processo que construímos até agora.
 
@@ -388,7 +374,6 @@ A ideia aqui é subtrairmos um de todas as casas em que temos valores maiores qu
 
 :vetorsub1
 
-
 ???
 
 Aqui temos um pseudo código gerado com o raciocínio construído acima.
@@ -412,7 +397,6 @@ para todo valor i menor que metade do tamanho do input
 ```
 
 Um detalhe importante de mencionarmos é que a dimensão do vetor de saída será igua ao maior valor encontrar no input.
-
 
 ## Complexidade de tempo da implementação vetorial
 
@@ -439,7 +423,7 @@ O primeiro loop tem o número de iterações = n, enquanto o segundo tem número
 Qual é a complexidade de tempo dessa operação?
 
 ::: Resposta
-O (n\*S)
+O ($n.S$)
 :::
 
 ???
@@ -451,12 +435,12 @@ A segunda parte da implementação consiste em e subtrair '1' de todo elemento d
 Qual é a complexidade de tempo dessa operação?
 
 ::: Resposta
-A complexidade dessa etapa também é O(n\*S)
+A complexidade dessa etapa também é O($n.S$)
 :::
 
 ???
 
-Assim, A complexidade da implementação vetorial é O(2*n*S) = O(n\*S).
+Assim, A complexidade da implementação vetorial é O($2n.S$) = O($n.S$).
 
 ## Complexidade de memória da implementação vetorial
 
@@ -475,6 +459,7 @@ O vetor precisa ter o tamanho igual ao maior valor do vetor de entrada.
 Como o único espaço de memória a ser alocado ao algoritmo é o espaço desse vetor, a complexidade será O(S).
 
 ## Mão na Massa
+
 !!! Mão na massa
 Aqui temos uma [ferramenta interativa](https://davireisvieira.github.io/desprog-gravity-sort-site/) que vai facilitar o entendimento de como a ideia de mudar os eixos do ábaco funciona. Essa parte é fundamental para você concretizar o que viu até agora.
 
@@ -482,13 +467,19 @@ Aqui temos uma [ferramenta interativa](https://davireisvieira.github.io/desprog-
 
 ## Limitações
 
-??? Checkpoint 1
+??? Checkpoint
 
+Depois de implementarmos as duas versões do Gravity Sort, chegou a hora de pensarmos nas limitações que ele possui ao receber uma lista não ordenada. Liste quais são.
+
+!!! Dica
 Quais valores podemos contar no ábaco?
+!!!
 
 ::: Resposta
-Apenas números positivos e inteiros. As restrições do ábaco também são aplicáveis ao Bead sort.
-:::
+
+- Apenas números positivos.
+- Apenas números inteiros.
+  :::
 
 ???
 
