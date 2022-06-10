@@ -458,32 +458,32 @@ O vetor precisa ter o tamanho igual ao maior valor do vetor de entrada.
 
 Como o único espaço de memória a ser alocado ao algoritmo é o espaço desse vetor, a complexidade será O(S).
 
-## Mão na Massa
+## Considerações finais
+
+É importante mencionar que o algoritmo é altamente teórico e tem pouco uso em implementações práticas dada sua complexidade a melhor delas. No entanto, seu valor se dá pela tradução de um fenômeno físico em um algoritmo de ordenação.
 
 !!! Mão na massa
-Aqui temos uma [ferramenta interativa](https://davireisvieira.github.io/desprog-gravity-sort-site/) que vai facilitar o entendimento de como a ideia de mudar os eixos do ábaco funciona. Essa parte é fundamental para você concretizar o que viu até agora.
-
+Aqui temos uma [ferramenta interativa](https://davireisvieira.github.io/desprog-gravity-sort-site/) que vai permitir que você teste por conta própria o efeito da gravidade nas peças de um ábaco.
 !!!
 
-## Limitações
+Além disso assim como o ábaco na vida real, o Gravity Sort possui algumas limitações (até nisso existe um paralelo). Tente pensar em quais seriam essas limitações e por que elas existem.
 
 ??? Checkpoint
-
-Depois de implementarmos as duas versões do Gravity Sort, chegou a hora de pensarmos nas limitações que ele possui ao receber uma lista não ordenada. Liste quais são.
 
 !!! Dica
 Quais valores podemos contar no ábaco?
 !!!
 
+
 ::: Resposta
 
-- Apenas números positivos.
-- Apenas números inteiros.
-  :::
+- Apenas números positivos
+- Apenas números inteiros
 
+:::
 ???
 
-É importante mencionar que o algoritmo é altamente teórico e tem pouco uso em implementações práticas.
+
 
 ## Desafio
 
