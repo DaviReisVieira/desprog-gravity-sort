@@ -310,35 +310,40 @@ O espaço alocado para essa matriz é justamente a complexidade de memória para
 
 ## Implementação em vetor
 
-A segunda implementação que vamos mostrar é a utilizando um vetor. Ao trocarmos seu eixo e deixarmos as peças caírem, estamos ordenando visualmente.
+A segunda implementação que vamos mostrar é a utilizando um vetores.  Resgatando a explicação anterior de matrizes, vamos usá-la como ponto de partida. Precisamos encontrar alguma forma de transformar aquela matriz de uns e zeros em um único vetor.
 
 ??? Checkpoint 1
 
-Como podemos transformar esse raciocínio em código?
+Você tem alguma ideia de como isso pode ser feito?
 
-!!!
+!!! Dica
 
-Tente adpatar a explicação de matriz
+Use a ideia da matriz como base.
 
 !!!
 
 ::: Gabarito
 
-Vamos pegar todo o raciocínio da matriz, mas agora vamos somar as linhas da matriz, resultando em um único vetor.
+Isso mesmo, somando as linhas da matriz. Se pensarmos bem, temos varios vetores empilhados, e para reunirmos todos os dados em um único vetor basta somar toda a informação.
+
+:vetor_check1
 
 ???
 
-Para isso iremos transformar cada linha em um vetor de 0 ou 1 em que a quantidade de 1 é o valor da linha e então somar as linhas.
-
-:vector
-
-Detalhando um pouco mais temos as seguintes etapas:
+Detalhando um pouco mais o processo anterior e resgatando a criação da matriz temos as seguintes etapas:
 
 1. Transformar as linhas em vetores de tamanho igual ao maior valor do input com zeros;
 
 2. Preencher as posições da esquerda para a direita com 1 na quantidade de pedaços nas linhas;
 
 3. Somar as linhas em um único vetor;
+
+Aqui temos a visualização do processo completo.
+
+:vetor
+
+
+Aqui temos o pseudo código do processo que construímos até agora.
 
 ```txt
 # Input do algoritmo -> [1, 4, 3]
@@ -370,7 +375,7 @@ Sabemos que todos os nossos números estão somados dentro desse único vetor, a
 
 !!! Dica
 
-Pense novamente no ábaco após a gravidade ter feito efeito sobre nossas peças.
+Lembre da ideia que cada linha era um vetor e nós "achatamos" a nossa matriz (ou a nossa pilha de vetores) em um único vetor. Podemos então retirar de algum jeito vetor a vetor desse único vetor.
 
 !!!
 
@@ -380,19 +385,26 @@ Voltando para a alusão do ábaco, podemos retirar a última linha e contar o n�
 
 :vector_loop2
 
-Com isso, precisamos transformar essa alusão para o caso do nosso vetor.
+Com isso, precisamos aplicar essa alusão do ábaco ao nosso vetor.
 
 ???
 
 ??? Construção de raciocínio
 
-O que significa remover a última linha em termos de código?
+O que significa remover a última linha do ábaco em relação ao nosso vetor?
+
+!!! Dica
+
+Pense no processo de subtração, porém faça algumas restrições para não encontrar valores negativos.
+
+!!!
 
 ::: Resposta
 
-Podemos remover um de todos os items do vetor e em todos os casos que o resultado seja maior que zero, temos um valor válido. Portanto, precisamos apenas somar a quantidade de valores validos encontrados. Abaixo temos uma ilustração desse processo.
+A ideia aqui é subtrairmos um de todas as casas em que temos valores maiores que zero. Sempre que essa condição for contemplada, vamos somar as casas onde ocorreu subtração e assim encontrar o valor a ser ordenado. Abaixo temos uma melhor visualização desse processo:
 
-:vector2code
+:vetorsub1
+
 
 ???
 
@@ -415,6 +427,9 @@ para todo valor i menor que metade do tamanho do input
 
 # Resultado -> [4, 3, 1]
 ```
+
+Um detalhe importante de mencionarmos é que a dimensão do vetor de saída será igua ao maior valor encontrar no input.
+
 
 ## Complexidade de tempo da implementação vetorial
 
